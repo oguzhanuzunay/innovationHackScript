@@ -7,25 +7,16 @@ arr.map((element) =>
 );
 
 addButton.click();
-let getAllButtons = () => {
-  let options = document.getElementsByClassName('coral-SelectList')[3].children;
+await new Promise((resolve) => setTimeout(resolve, 1000));
 
-  options = [...options];
-  optionsName = [];
-  options.map((optName) => {
-    optionsName.push(optName.innerText);
-  });
-  console.log(optionsName);
+let options = document.getElementsByClassName('coral-SelectList')[3].children;
 
-  optionsName.map((item, index) => {
-    console.log(optionsName.length - 1, index);
-    optionsName.length - 1 != index
-      ? setTimeout(() => {
-          addButton.click();
-        }, 1000 * index)
-      : 0;
-  });
-};
+options = [...options];
+optionsName = [];
+options.map((optName) => {
+  optionsName.push(optName.innerText);
+});
+console.log(optionsName);
 
 let selectAllField = () => {
   let buttons = document.getElementsByClassName('coral-Select-button');
@@ -44,16 +35,31 @@ let selectAllField = () => {
       let clickItem =
         document.getElementsByClassName('is-visible')[1].children[count - 1];
       clickItem.click();
-
-      count != input.length
-        ? console.log(clickItem.innerText)
-        : console.log(
-            '%cDONE !!!',
-            'color:green; font-family:monospace; font-size: 20px'
-          );
+      console.log(clickItem.innerText);
+      if (count == input.length) {
+        console.log(
+          '%cDONE !!!',
+          'color:green; font-family:monospace; font-size: 20px'
+        );
+        document.getElementsByClassName('cq-dialog-submit')[0].click();
+      }
     }, 500 * index);
   });
 };
 
-let s1 = () => getAllButtons();
-let s2 = () => selectAllField();
+await new Promise((resolve) => {
+  optionsName.map((item, index) => {
+    setTimeout(() => {
+      if (optionsName.length !== index + 1) {
+        console.log(`${optionsName.length}/${index + 1}`);
+        addButton.click();
+      } else {
+        console.log(
+          `%c ${optionsName.length}/${index + 1} \n\n Feild Sellecting ...`,
+          'color:green; font-family:monospace; font-size: 20px'
+        );
+        selectAllField();
+      }
+    }, 1000 * index);
+  });
+});
