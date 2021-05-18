@@ -3,7 +3,7 @@ arr = [...arr];
 let addButton;
 
 arr.map((element) =>
-  element.children[0].innerText === 'Add' ? (addButton = element) : ''
+  element.children[0].innerText === 'Add' || 'Ekle' ? (addButton = element) : ''
 );
 
 addButton.click();
@@ -42,6 +42,16 @@ let selectAllField = () => {
           'color:green; font-family:monospace; font-size: 20px'
         );
         document.getElementsByClassName('cq-dialog-submit')[0].click();
+        setTimeout(() => {
+          document.getElementById('pageinfo-trigger').click();
+        }, 500);
+        setTimeout(() => {
+          document
+            .getElementsByClassName(
+              'js-editor-PageInfo-closePopover cq-authoring-actions-quickpublish-activator coral3-Button coral3-Button--secondary'
+            )[0]
+            .click();
+        }, 500 * 2);
       }
     }, 500 * index);
   });
@@ -60,6 +70,6 @@ await new Promise((resolve) => {
         );
         selectAllField();
       }
-    }, 1000 * index);
+    }, 500 * index);
   });
 });
